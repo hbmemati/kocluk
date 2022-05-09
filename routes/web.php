@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -29,8 +30,23 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/add', 'add_index')->name('add.index');
             Route::post('/add', 'add')->name('add');
 
-            Route::get('/content', 'content')->name('content');
+            Route::get('/{slug}', 'content')->name('content');
+            Route::post('/{slug}/send', 'add_content')->name('content.add');
+
+
+            Route::get('/{slug}/follow', 'follow')->name('content.follow');
+            Route::get('/{slug}/unfollow', 'unfollow')->name('content.unfollow');
+
+            Route::post('/{slug}/status', 'status')->name('status');
         });
+
+    Route::controller(UserController::class)->prefix('user')->name('user.')
+        ->group(function () {
+
+            Route::get('/', 'index')->name('index');
+            Route::post('/update', 'update')->name('update');
+        });
+
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('image/upload', [HelperController::class, 'upload'])->name('image.upload');

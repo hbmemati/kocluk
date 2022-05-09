@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Education\Role;
+use App\Models\User\LessonRole;
 use App\Models\User\Type;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -53,5 +54,14 @@ class User extends Authenticatable
         return $this->belongsTo(Type::class);
     }
 
+    public function lessons()
+    {
+        return $this->hasMany(LessonRole::class, 'user_id', 'id')->where('status', true);
+    }
+
+    public function wlessons()
+    {
+        return $this->hasMany(LessonRole::class, 'user_id', 'id')->where('status', false);
+    }
 
 }

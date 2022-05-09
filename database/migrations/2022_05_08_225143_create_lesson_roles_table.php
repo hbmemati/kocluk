@@ -21,6 +21,8 @@ class CreateLessonRolesTable extends Migration
             $table->foreign('lesson_id')->references('id')->on('lessons');
             $table->foreign('role_id')->references('id')->on('roles');
             $table->foreign('user_id')->references('id')->on('types');
+
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

@@ -50,21 +50,31 @@ class Lesson extends Model
     }
 
 
-
     public function students()
     {
-        return $this->hasMany(User\LessonRole::class)->where('role_id', 3);
+        return $this->hasMany(User\LessonRole::class)
+            ->where('role_id', 3)->where('status', true)
+            ->join('users', 'users.id', '=', 'lesson_roles.user_id');
+    }
+
+    public function allstudents()
+    {
+        return $this->hasMany(User\LessonRole::class)
+            ->where('role_id', 3)
+            ->join('users', 'users.id', '=', 'lesson_roles.user_id');
     }
 
     public function teachers()
     {
-        return $this->hasMany(User\LessonRole::class)->where('role_id', 2);
+        return $this->hasMany(User\LessonRole::class)->where('role_id', 2) ->join('users', 'users.id', '=', 'lesson_roles.user_id');;
     }
 
     public function admins()
     {
         return $this->hasMany(User\LessonRole::class)->where('role_id', 1);
     }
+
+
 
 
 

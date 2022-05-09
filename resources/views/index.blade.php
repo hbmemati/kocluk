@@ -169,8 +169,14 @@
                             <!--begin:Info-->
                             <!--begin:Menu-->
                             <div class="ms-1">
-{{--                                <button class="btn btn-sm btn-light-primary fw-bolder" >Başvur</button>--}}
-                                <a href="{{route('lesson.content',['lesson' =>$lesson->id])}}" class="btn btn-sm btn-light-primary fw-bolder" >Kursa Git</a>
+
+                                @if(in_array($lesson->id, $user_lessons))
+                                <a href="{{route('lesson.content',['slug' =>$lesson->slug])}}" class="btn btn-sm btn-light-primary fw-bolder" >Kursa Git</a>
+                                @elseif(in_array($lesson->id, $user_lessons2))
+                                    <a href="{{route('lesson.content.unfollow', ['slug' =>$lesson->slug, 'lesson_id'=>$lesson->id])}}" class="btn btn-sm btn-light-primary fw-bolder">Geri Çek</a>
+                                @else
+                                    <a href="{{route('lesson.content.follow', ['slug' =>$lesson->slug, 'lesson_id'=>$lesson->id])}}" class="btn btn-sm btn-light-primary fw-bolder">Başvur</a>
+                                @endif
                             </div>
                             <!--end::Menu-->
                         </div>
@@ -196,38 +202,27 @@
 
                         <!--end:Stats-->
                         <!--begin:Team-->
-                        <div class="d-flex flex-column mt-10">
-                            <div class="text-dark me-2 fw-bolder pb-4">Ekip</div>
-                            <div class="d-flex">
-                                <a href="#" class="symbol symbol-35px me-2" data-bs-toggle="tooltip" title=""
-                                   data-bs-original-title="Ana Stone">
-                                    <img src="assets/media/avatars/300-6.jpg" alt="">
-                                </a>
-                                <a href="#" class="symbol symbol-35px me-2" data-bs-toggle="tooltip" title=""
-                                   data-bs-original-title="Mark Larson">
-                                    <img src="assets/media/avatars/300-5.jpg" alt="">
-                                </a>
-                                <a href="#" class="symbol symbol-35px me-2" data-bs-toggle="tooltip" title=""
-                                   data-bs-original-title="Sam Harris">
-                                    <img src="assets/media/avatars/300-9.jpg" alt="">
-                                </a>
-                                <a href="#" class="symbol symbol-35px" data-bs-toggle="tooltip" title=""
-                                   data-bs-original-title="Alice Micto">
-                                    <img src="assets/media/avatars/300-10.jpg" alt="">
-                                </a>
-                            </div>
-                        </div>
+
                         <div class="d-flex flex-column mt-10">
                             <div class="text-dark me-2 fw-bolder pb-4">Eğitimciler</div>
                             <div class="d-flex">
+                                @foreach($lesson->teachers as $teacher)
+                                    @if($teacher->image != null)
                                 <a href="#" class="symbol symbol-35px me-2" data-bs-toggle="tooltip" title=""
                                    data-bs-original-title="Ana Stone">
-                                    <img src="assets/media/avatars/300-6.jpg" alt="">
+                                    <img src="{{$teacher->image}}" alt="">
                                 </a>
-                                <a href="#" class="symbol symbol-35px me-2" data-bs-toggle="tooltip" title=""
-                                   data-bs-original-title="Mark Larson">
-                                    <img src="assets/media/avatars/300-5.jpg" alt="">
-                                </a>
+                                    @else
+                                        <a href="#" class="symbol symbol-35px me-2" data-bs-toggle="tooltip" title=""
+                                           data-bs-original-title="{{$teacher->name}} {{$teacher->surname}}">
+                                        <div class="symbol symbol-50px">
+                                            <div class="symbol symbol-45px symbol-circle">
+                                                <span class="symbol-label bg-light-warning text-warning fs-2hx fw-bolder">{{$teacher->name[0]}}</span>
+                                            </div>
+                                        </div>
+                                        </a>
+                                    @endif
+                                @endforeach
 
                             </div>
                         </div>

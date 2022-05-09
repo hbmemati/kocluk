@@ -10,7 +10,9 @@ class LessonRole extends Model
     use HasFactory;
 
     protected $fillable = [
-       'lesson_id', 'role_id', 'user_id'
+       'lesson_id', 'role_id', 'user_id', 'status'
 
     ];
+
+
 }

@@ -25,7 +25,7 @@
     <link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css"/>
     <!--end::Global Stylesheets Bundle-->
-
+    @yield('head')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
@@ -127,13 +127,17 @@
                                 </a>
                             </div>
 
-                            <div class="menu-item">
-                                <a class="menu-link @if(request()->routeIs('lesson.index')) active @endif" href="{{route('lesson.index')}}">
+
+                            @if($user->type->id == 1|| $user->type->id == 2)
+                                <div class="menu-item">
+                                    <a class="menu-link @if(request()->routeIs('lesson.index')) active @endif"
+                                       href="{{route('lesson.index')}}">
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
 											<span class="svg-icon svg-icon-2">
 											<!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                         viewBox="0 0 24 24" fill="none">
                                                     <path opacity="0.3"
                                                           d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
                                                           fill="black"/>
@@ -145,7 +149,29 @@
 											</span>
                                             <!--end::Svg Icon-->
 										</span>
-                                    <span class="menu-title">Kurslarım</span>
+                                        <span class="menu-title">Kurslarım</span>
+                                    </a>
+                                </div>
+                            @endif
+
+
+                            <div class="menu-item">
+                                <a class="menu-link @if(request()->routeIs('user.index')) active @endif"
+                                   href="{{route('user.index')}}">
+										<span class="menu-icon">
+											<!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                     viewBox="0 0 24 24" fill="none">
+                                                        <path
+                                                            d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z"
+                                                            fill="black"/>
+                                                        <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="black"/>
+                                                        </svg>
+											</span>
+                                            <!--end::Svg Icon-->
+										</span>
+                                    <span class="menu-title">Profil</span>
                                 </a>
                             </div>
 
@@ -286,8 +312,8 @@
                     <!--begin::Container-->
                     <div id="kt_content_container" class="container-xxl">
                         <!--begin::Row-->
-                    @yield('content')
-                    <!--end::Row-->
+                        @yield('content')
+                        <!--end::Row-->
                     </div>
                     <!--end::Container-->
                 </div>
