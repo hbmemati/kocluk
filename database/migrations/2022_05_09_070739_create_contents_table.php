@@ -18,7 +18,7 @@ class CreateContentsTable extends Migration
             $table->unsignedBigInteger('lesson_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('lesson_id')->references('id')->on('lessons');
-            $table->foreign('user_id')->references('id')->on('types');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->longText('content');
             $table->timestamps();
         });
